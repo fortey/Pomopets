@@ -1,0 +1,16 @@
+﻿@model HeroSummaryViewModel
+
+@if (Model.IsAuthenticated)
+{
+    <div class="pr-3">
+        Lvl. @Html.DisplayFor(model => model.Level)
+    </div>
+    <div class="pr-3">
+        Exp. @Html.DisplayFor(model => model.Experience)/@Html.DisplayFor(model => model.ExperienceLimit)
+    </div>
+    <div class="pr-3">
+        Money @Html.DisplayFor(model => model.Money)
+    </div>
+    
+}
+

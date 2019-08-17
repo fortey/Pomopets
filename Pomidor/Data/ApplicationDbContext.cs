@@ -6,11 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pomidor.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<Player>
     {
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            //Database.EnsureCreated();
         }
     }
 }
