@@ -28,7 +28,6 @@ namespace Pomidor.ViewComponents
                 model.Level = user.Level;
                 model.Experience = user.Experience;
                 model.Money = user.Money;
-                model.ExperienceLimit = Player.Levels[user.Level];
             }
             return View(model);
         }

@@ -13,14 +13,14 @@ namespace Pomidor
             800, 1100, 1400, 1800, 2300
         };
         public int Money { get; set; }
-        public int Experience { get; set; }
+        public int Experience { get; private set; }
         public int PrimaryPet { get; set; }
         public int Level { get; set; }
 
         public void AddExperience(int count)
         {
             Experience += count;
-            if (Experience >= Levels[Level])
+            if (Experience >= Levels[Level] && Level + 1 < Levels.Length)
             {
                 Experience -= Levels[Level];
                 Level++;

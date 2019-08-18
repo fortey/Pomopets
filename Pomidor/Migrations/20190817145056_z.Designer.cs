@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pomidor;
 
 namespace Pomidor.Migrations
 {
     [DbContext(typeof(PomoDbContext))]
-    partial class PomoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190817145056_z")]
+    partial class z
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,6 +48,9 @@ namespace Pomidor.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<int>("Duration");
 
                     b.Property<DateTime>("EndTime");
@@ -57,6 +62,8 @@ namespace Pomidor.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Pomidors");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Pomidor");
                 });
 
             modelBuilder.Entity("Pomidor.TypeOfPet", b =>
@@ -79,17 +86,16 @@ namespace Pomidor.Migrations
                         new
                         {
                             ID = 1,
-                            ImgFolder = "Cat",
                             Name = "Cat",
-                            Price = 50
-                        },
-                        new
-                        {
-                            ID = 2,
-                            ImgFolder = "Hog",
-                            Name = "Hog",
-                            Price = 100
+                            Price = 0
                         });
+                });
+
+            modelBuilder.Entity("Pomidor.Recreation", b =>
+                {
+                    b.HasBaseType("Pomidor.Pomidor");
+
+                    b.HasDiscriminator().HasValue("Recreation");
                 });
 
             modelBuilder.Entity("Pomidor.Pet", b =>

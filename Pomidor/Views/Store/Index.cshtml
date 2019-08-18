@@ -1,0 +1,23 @@
+﻿@model IEnumerable<GoodViewModel>
+
+@{
+    ViewData["Title"] = "Store";
+}
+
+<h1>Store</h1>
+<div class="d-flex align-content-start flex-wrap">
+    @foreach (var good in Model)
+    {
+        <div class="border border-info m-2 p-2">
+            <form method="post">
+                <div class="text-center">
+                    @Html.DisplayFor(modelItem => good.Name)
+                </div>
+                <img src="~/images/pets/@good.Image" />
+                <button asp-action="Buy" asp-route-id="@good.ID" disabled="@(!good.IsAvailable)" class="btn-block">
+                    <img src="~/images/money.png" width="32" height="32" /> @Html.DisplayFor(modelItem => good.Price)
+                </button>
+            </form>
+        </div>
+    }
+</div>

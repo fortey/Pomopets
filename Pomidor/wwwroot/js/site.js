@@ -4,7 +4,7 @@ $(document).ready(function () {
         alert('Ваш браузер не поддерживает HTML Notifications.');
     }
     else if (Notification.permission !== 'denied') {
-        Notification.requestPermission();//function (permission) { });
+        Notification.requestPermission();
     }
 
     var timer = $('.Time')[0];
@@ -60,13 +60,11 @@ function sendNotification(title, options) {
 
 function start() {
     $.post('/Home/Start', function (data) {
-        //alert(data.isPomidor + '  ' + data.rest);
         var timer = $('.Time')[0];
         if (timer !== undefined) {
             
             startTimer(timer, data.rest);
         }
-       
     });
 }
 
@@ -76,8 +74,9 @@ function completePomidor() {
             $('#money').text(data.money);
             $('#experience').text(data.experience);
             notifyOnCompletion();
+            updateHeroSummary();
+            updatePrimaryPet();
         }
-
     });
 }
 
@@ -88,4 +87,22 @@ function notifyOnCompletion() {
         dir: 'auto'
     });
     $('#CompletionForm').modal('show');
+}
+
+function updateHeroSummary() {
+    $.ajax({
+        type: "GET",
+        url: '/Home/HeroSummary'
+    }).done(function (result) {
+        $("#heroSummary").html(result);
+    });
+}
+
+function updatePrimaryPet() {
+    $.ajax({
+        type: "GET",
+        url: '/Home/PrimaryPet'
+    }).done(function (result) {
+        $("#primaryPet").html(result);
+    });
 }

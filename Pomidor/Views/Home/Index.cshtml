@@ -1,14 +1,17 @@
 ﻿@model PomidorViewModel
 @{
-    ViewData["Title"] = "Pomidor";
+    ViewData["Title"] = "Pomopets";
 }
 
-<div class="text-center">
-
-    <h1 class="Time" data-container="@Model.Rest.TotalMilliseconds">@Model.Rest.ToString(@"mm\:ss")</h1>
-    <button type="button" class="btn" onclick="start()">Start</button>
+<div class="row">
+    <div id="primaryPet" class="col-3">
+        @await Component.InvokeAsync("PrimaryPet")
+    </div>
+    <div class="text-center col-9">
+        <h1 class="Time" data-container="@Model.Rest.TotalMilliseconds">@Model.Rest.ToString(@"mm\:ss")</h1>
+        <button type="button" class="btn" onclick="start()">Start</button>
+    </div>
 </div>
-
 <div class="modal fade" id="CompletionForm">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -34,9 +37,11 @@
     </div>
 </div>
 
+
+
 @section scripts
 {
 <script type="text/javascript">
-    
+
 </script>
     }

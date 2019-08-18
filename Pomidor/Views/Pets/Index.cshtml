@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Pet>
+
+@{
+    ViewData["Title"] = "Pets";
+}
+
+<h1>Pets</h1>
+<div class="d-flex align-content-start flex-wrap">
+    @foreach (var item in Model)
+    {
+        <div class="border border-info m-2 p-2">
+            <form method="post">
+                <div class="text-center">
+                    @Html.DisplayFor(modelItem => item.Type.Name)
+                </div>
+                @await Html.PartialAsync("_PetInfoPartial", item)
+                <button asp-action="SetPrimary" asp-route-id="@item.ID" class="btn-block">Set primary</button>
+            </form>
+        </div>
+    }
+</div>

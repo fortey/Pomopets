@@ -10,7 +10,7 @@ namespace Pomidor
         public bool IsAuthenticated { get; set; } = false;
         public int Level { get; set; }
         public int Experience { get; set; }
-        public int ExperienceLimit { get; set; }
+        public int ExperienceLimit { get => Player.Levels[Level]; }
         public int Money { get; set; }
     }
 }

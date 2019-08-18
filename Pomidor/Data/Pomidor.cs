@@ -12,7 +12,6 @@ namespace Pomidor
         public static int ExperienceAward { get; set; } = 10;
 
         public int ID { get; set; }
-        //public const int DurationTime = 25;
         public string UserID { get; set; }
         public DateTime EndTime { get; set; }
         public int Duration { get; set; }

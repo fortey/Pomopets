@@ -9,7 +9,6 @@ namespace Pomidor
     public class PomoDbContext : DbContext
     {
         public DbSet<Pomidor> Pomidors { get; set; }
-        public DbSet<Recreation> Recreations { get; set; }
         public DbSet<TypeOfPet> TypeOfPets { get; set; }
         public DbSet<Pet> Pets { get; set; }
 
@@ -21,12 +20,21 @@ namespace Pomidor
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TypeOfPet>().HasData(new TypeOfPet
-            {
-                ID = 1,
-                Name = "Cat"
-            });
-
+            modelBuilder.Entity<TypeOfPet>().HasData(
+                new TypeOfPet
+                {
+                    ID = 1,
+                    Name = "Cat",
+                    ImgFolder = "Cat",
+                    Price = 50
+                },
+                new TypeOfPet
+                {
+                    ID = 2,
+                    Name = "Hog",
+                    ImgFolder = "Hog",
+                    Price = 100
+                }); 
         }  
     }
 }

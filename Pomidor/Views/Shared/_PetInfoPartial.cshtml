@@ -1,0 +1,10 @@
+﻿@model Pet
+
+<div class="text-center">
+    <img src="~/images/pets/@Html.DisplayFor(model => model.Image)" />
+    <div>
+        Lvl. @Html.DisplayFor(modelItem => Model.Level)&ensp;
+        <img class="ml-1" src="~/images/experince.png" width="24" height="24" />
+        @Html.DisplayFor(modelItem => Model.Experience)/@Html.DisplayFor(modelItem => Model.ExperienceLimit)
+    </div>
+</div>

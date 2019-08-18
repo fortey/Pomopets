@@ -18,12 +18,16 @@ namespace Pomidor
         public TypeOfPet Type { get; set; }
 
         public int Level { get; set; }
-        public int Experience { get; set; }
+        public int Experience { get; private set; }
+
+        public int ExperienceLimit { get => Levels[Level]; }
+
+        public string Image { get => $"{Type?.ImgFolder ?? String.Empty}/{Level}.png"; }
 
         public void AddExperience(int count)
         {
             Experience += count;
-            if (Experience >= Levels[Level])
+            if (Experience >= Levels[Level] && Level+1 < Levels.Length)
             {
                 Experience -= Levels[Level];
                 Level++;

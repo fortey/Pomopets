@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Pomidor.Data;
 using Pomidor.Models;
 
 namespace Pomidor.Controllers
@@ -32,15 +30,6 @@ namespace Pomidor.Controllers
                 var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 var user = await userManager.GetUserAsync(User);
 
-                var primaryPet = context.Pets.Include(x=>x.Type).FirstOrDefault(x => x.ID == user.PrimaryPet);
-                if(primaryPet == null)
-                {
-                    primaryPet = new Pet { Type = context.TypeOfPets.First(), Level = 1, UserID = id };
-                    context.Pets.Add(primaryPet);
-                    context.SaveChanges();
-                    user.PrimaryPet = primaryPet.ID;
-                    await userManager.UpdateAsync(user);
-                }
                 var pomidor = context.Pomidors.FirstOrDefault(x => x.UserID == id);
                 if (pomidor == null)
                 {
@@ -62,11 +51,10 @@ namespace Pomidor.Controllers
                 pomidor.Start(25);
                 context.Pomidors.Add(pomidor);
                 await context.SaveChangesAsync();
-
             }
             else
             {
-                pomidor.Start(1);
+                pomidor.Start(25);
                 context.Update(pomidor);
                 await context.SaveChangesAsync();
             }
@@ -88,7 +76,7 @@ namespace Pomidor.Controllers
                 user.Money += Pomidor.MoneyAward;
                 await userManager.UpdateAsync(user);
 
-                var pet = context.Pets.FirstOrDefault(x => x.UserID == id);
+                var pet = context.Pets.FirstOrDefault(x => x.ID == user.PrimaryPet);
                 if(pet!= null)
                 {
                     pet.AddExperience(Pomidor.ExperienceAward);
@@ -98,26 +86,21 @@ namespace Pomidor.Controllers
                 await context.SaveChangesAsync();
 
                 result.IsSuccesfully = true;
-                result.Experience = 10;
-                result.Money = 10;
+                result.Experience = Pomidor.ExperienceAward;
+                result.Money = Pomidor.MoneyAward;
             }
             return new JsonResult(result);
         }
 
-        //public async Task<IActionResult> HeroSummary()
-        //{
-        //    var model = new HeroSummaryViewModel();
-        //    if (User.Identity.IsAuthenticated)
-        //    {
-        //        var user = await userManager.GetUserAsync(User);
-        //        model.IsAuthenticated = true;
-        //        model.Level = user.Level;
-        //        model.Experience = user.Experience;
-        //        model.Money = user.Money;
-        //        model.ExperienceLimit = Player.Levels[user.Level];
-        //    }
-        //    return new PartialViewResult() { ViewName = "_HeroSummary"};//, Model = model
-        //}
+        public IActionResult HeroSummary()
+        {
+            return ViewComponent("HeroSummary");
+        }
+
+        public IActionResult PrimaryPet()
+        {
+            return ViewComponent("PrimaryPet");
+        }
 
         public IActionResult Privacy()
         {

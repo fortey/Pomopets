@@ -2,15 +2,18 @@
 
 @if (Model.IsAuthenticated)
 {
-    <div class="pr-3">
-        Lvl. @Html.DisplayFor(model => model.Level)
+    <div class="border border-dark p-1">
+        <div class="pr-3 d-inline">
+            Lvl. @Html.DisplayFor(model => model.Level)
+        </div>
+        <div class="pr-3 d-inline">
+            <img src="~/images/experince.png" width="32" height="32" />
+            @Html.DisplayFor(model => model.Experience)/@Html.DisplayFor(model => model.ExperienceLimit)
+        </div>
+        <div class="d-inline">
+            <img src="~/images/money.png" width="32" height="32" />
+            @Html.DisplayFor(model => model.Money)
+        </div>
     </div>
-    <div class="pr-3">
-        Exp. @Html.DisplayFor(model => model.Experience)/@Html.DisplayFor(model => model.ExperienceLimit)
-    </div>
-    <div class="pr-3">
-        Money @Html.DisplayFor(model => model.Money)
-    </div>
-    
 }
 
